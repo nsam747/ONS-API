@@ -22,7 +22,7 @@ From within the **Acre.Backend.Ons folder**:
 
 (2) To parse ONS datasets into the database, and then subsequently start the api server, run the following command: `dotnet run seed=true`
 
-(3) The endpoint documentation can be viewed through the swagger document at `https://localhost:5001/swagger` whilst the server is running.
+(3) The endpoint documentation can be viewed through the swagger document at https://localhost:5001/swagger whilst the server is running.
 
 (4) Once the database has been built the server can be started on subsequent runs with just: `dotnet run` 
 
@@ -68,9 +68,7 @@ The tests are contained within the Acre.Backend.Ons.Test project and can be run 
 
 
 ## Potential Improvements (In hindsight):
-1) My solution didn't account for 
-
-2) When parsing data from the ONS datasets into the sqlite database only categories (i.e 1. Food & non-alcoholic drinks) and their immediate subcategories (i.e 1.1 Food) are included. Due to lack of granularity I wasn't able to retrieve the relevant information for outgoings_sports (9.4.1 Sports admissions, subscriptions, leisure class fees) and outgoings_television_licenses (9.4.3 TV, video, satellite rental, cable subscriptions) which is why they were omitted from the result.
+1) When parsing data from the ONS datasets into the sqlite database only categories (i.e 1. Food & non-alcoholic drinks) and their immediate subcategories (i.e 1.1 Food) are included. Due to lack of granularity I wasn't able to retrieve the relevant information for outgoings_sports (9.4.1 Sports admissions, subscriptions, leisure class fees) and outgoings_television_licenses (9.4.3 TV, video, satellite rental, cable subscriptions) which is why they were omitted from the result.
 
 I’ve built the application to be extensible such that if needed it could be relatively easily modified to accommodate categories within subcategories (i.e 1.1.1 Bread, rice and cereals) with a minor change to the relational database models and parsing script.
 
@@ -82,11 +80,11 @@ An alternate idea could be a self referential table to allow for unlimited nesti
 
 ![ProposedRelationship2](https://i.imgur.com/CGAlVD5.png)
 
-3) I wrote three parsers in total to accommodate for the three spreadsheets, however the the OnsByAge and OnsByRegion parsers are almost identical, and with some refactoring could be combined into a single shared parser. In this case the configuration file would need to contain additional data for each dataset to indicate the data model into which its data should be parsed.
+2) I wrote three parsers in total to accommodate for the three spreadsheets, however the the OnsByAge and OnsByRegion parsers are almost identical, and with some refactoring could be combined into a single shared parser. In this case the configuration file would need to contain additional data for each dataset to indicate the data model into which its data should be parsed.
 
-4) Assuming this application would support subsequent years of ONS data then the Ons_by_x tables should have an added column to indicate the year or range of years from which the data was collected.
+3) Assuming this application would support subsequent years of ONS data then the Ons_by_x tables should have an added column to indicate the year or range of years from which the data was collected.
 
-5) An improved solution, which would require knowing the average age of those surveyed in the ONS by region dataset, would allow us to do the following:
+4) An improved solution, which would require knowing the average age of those surveyed in the ONS by region dataset, would allow us to do the following:
 
 Scenario:
 
