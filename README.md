@@ -29,7 +29,7 @@ From within the **Acre.Backend.Ons folder**:
 When making changes to the datasets the database must be rebuilt before those changes can be reflected in the application, this can be done by re-running command (2)
 
 By default the application will return values based on the region of the postcode associated with a specific case, however to accommodate for the “Hybrid Values” extension outlined in the original spec, an optional parameter can be passed to the API endpoint to have it return the average value of those found in both the ONS by region and ONS by age datasets.
-`http://localhost:5000/api/case/{caseId}/outgoings/by/region**?useAge=true**`
+http://localhost:5000/api/case/{caseId}/outgoings/by/region<b>?useAge=true</b>
 
 ## Implementation:
 
