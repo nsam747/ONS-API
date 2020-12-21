@@ -20,7 +20,7 @@ From within the **Acre.Backend.Ons folder**:
 
 (2) To parse ONS datasets into the database, and then subsequently start the api server, run the following command: `dotnet run seed=true`
 
-(3) The endpoint documentation can be viewed through the swagger document at <url> whilst the server is running.
+(3) The endpoint documentation can be viewed through the swagger document at `https://localhost:5001/swagger` whilst the server is running.
 
 (4) Once the database has been built the server can be started on subsequent runs with just: `dotnet run` 
 

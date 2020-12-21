@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Acre.Backend.Ons.Controllers
 {
+    [Produces("application/json")]
     [ApiController]
     [Route("api/[controller]")]
     public class CaseController : ControllerBase
@@ -29,12 +30,14 @@ namespace Acre.Backend.Ons.Controllers
         /// <summary>
         /// Calculates the various expenditures of the household associated with a given Case using their region.
         /// </summary>
-        /// <param name="id">The Case Id to be queried against</param>
-        /// <returns>200: A model detailing the various predicted outgoings in GBP decimals</returns>
-        /// <returns>400: The associated case could not be found.</returns>
-        /// <returns>500: If the Case in question contains household members occupying more than one address</returns>
+        /// <param name="id">The Case Id to be queried against.</param>
+        /// <param name="useAge">A flag to indicate whether or not age should be taken into account for this Case.
+        /// The result will be averaged between that found for both ages and region when set to "true".</param>
+        /// <returns>A model detailing the various predicted outgoings in GBP decimals.</returns>
+        /// <response code="400">The associated Case could not be found.</response>
+        /// <response code="500">The associated Case contains household members occupying more than one address.</response>
         [HttpGet("{id:Guid}/outgoings/by/region")]
-        public async Task<IActionResult> OutgoingsByRegion(Guid id, [FromQuery]bool useAge)
+        public async Task<ActionResult<OnsResponseModel>> OutgoingsByRegion(Guid id, [FromQuery]bool useAge)
         {
             _logger.LogInformation($"Request for CaseId {id} received by {nameof(CaseController)}.{nameof(OutgoingsByRegion)}.");
             var associatedCase = _caseRepository.GetById(id);
@@ -58,13 +61,13 @@ namespace Acre.Backend.Ons.Controllers
 
         /// <summary>
         /// Calculates the various expenditures of the household associated with a given Case using their ages.
-        /// In the case of a household with adults of ages within varying age range categories then the estimate is calculated for each member and then averaged.
+        /// In the case of a household with adults of ages within varying age-range categories then the estimate is calculated for each member and then averaged.
         /// </summary>
-        /// <param name="id">The Case Id to be queried against</param>
-        /// <returns>200: A model detailing the various predicted outgoings in GBP decimals</returns>
-        /// <returns>400: The associated case could not be found.</returns>
+        /// <param name="id">The Case Id to be queried against.</param>
+        /// <returns>A model detailing the various predicted outgoings in GBP decimals.</returns>
+        /// <response code="400">The associated Case could not be found.</response>
         [HttpGet("{id:Guid}/outgoings/by/age")]
-        public async Task<IActionResult> OutgoingsByAge(Guid id)
+        public async Task<ActionResult<OnsResponseModel>> OutgoingsByAge(Guid id)
         {
             _logger.LogInformation($"Request for CaseId {id} received by {nameof(CaseController)}.{nameof(OutgoingsByAge)}.");
             var associatedCase = _caseRepository.GetById(id);
@@ -83,7 +86,7 @@ namespace Acre.Backend.Ons.Controllers
             }
         }
 
-        private IActionResult NotFoundCaseResponse(Guid id) {
+        private ActionResult<OnsResponseModel> NotFoundCaseResponse(Guid id) {
             _logger.LogWarning($"Could not find associated case for {id}.");
             return NotFound($"No case associated with id: {id} could be found.");
         }

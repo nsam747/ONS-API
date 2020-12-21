@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Acre.Backend.Ons.Abstractions;
 using Acre.Backend.Ons.Data;
@@ -16,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Acre.Backend.Ons
 {
@@ -50,6 +53,26 @@ namespace Acre.Backend.Ons
             services.AddScoped<IOnsRepository, OnsRepository>();
             services.AddSingleton<ICaseRepository, CaseRepository>();
 
+            // Swagger
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = "ONS API",
+                        Description = "A simple API for expenditure estimation based on ONS datasets.",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Nathaniel Sammy",
+                            Email = string.Empty,
+                            Url = new Uri("https://github.com/nsam747"),
+                        }
+                    });
+                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                    c.IncludeXmlComments(xmlPath);
+                }
+            );
+
             // Parsing
             var isParsingEnabled = Configuration.GetValue<bool>("seed");
             if(isParsingEnabled) {
@@ -69,6 +92,13 @@ namespace Acre.Backend.Ons
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ONS API V1");
+            });
 
             app.UseHttpsRedirection();
 

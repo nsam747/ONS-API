@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace Acre.Backend.Ons.Abstractions
 {
+    // Wrapper around the HttpClient to allow for the interface it implements to be overridded during testing with FakeItEasy
     public class HttpClientHandler : IHttpClient
     {
         private readonly HttpClient _client;
