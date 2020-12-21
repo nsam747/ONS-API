@@ -14,6 +14,8 @@ The schema is as follows:
 Interactive version: https://dbdiagram.io/d/5fdd35ef9a6c525a03bba3e5 
 
 ## Usage:
+_Requires .NET Core SDK 3.1+_
+
 From within the **Acre.Backend.Ons folder**:
 
 (1) Before being able to launch the application both `dotnet restore` and then `dotnet ef database update` must be run for installing dependencies and building the sqlite database respectively.
