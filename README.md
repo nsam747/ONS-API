@@ -64,7 +64,7 @@ If a new type of spreadsheet was added this implementation could be cleanly exte
 I wrote unit tests for the RegionLookupService that interfaces with the PostcodesIo REST API and the OnsRepository which queries the parsed datasets to calculate the outgoings given a certain client’s details such as region.
 All network requests were mocked using stub data from JSON files to ensure the tests were deterministic in nature. The OnsRepository tests also run against an in-memory database seeded with static test data to achieve the aforementioned result.
 
-The tests are contained within the Acre.Backend.Ons.Test project and can be run from within that folder using `dotnet test`.
+The tests are contained within the Acre.Backend.Ons.Test project and can be run from within that folder using `dotnet test` after installing dependencies and building via  `dotnet build`.
 
 
 ## Potential Improvements (In hindsight):
