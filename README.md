@@ -1,9 +1,8 @@
-# Acre Backend Test
 The ONS data is initially parsed into relational database models which are then stored in a local sqlite database for querying. Each spreadsheet occupies its own table with each data entry being associated to a subcategory which in turn belongs to a main category.
 Ex: “Medical products, appliances and equipment” is a subcategory of “6. Health” which is comprised of both “6.1 Medical products, appliances and equipment” and “6.2 Hospital services”
 My idea was to have the application be as data driven as possible with minimal effort needed (or none at all) to allow the application to accommodate changes or extensions to the datasets.
 
-**Note that I had to make a minor tweak to dataset's category names to keep them inline with the other documents:**
+**Note that minor tweaks to dataset's category names were made to keep them inline with the other documents:**
 - ONSByAge2019: "Life assurance <b>&</b> contributions to pension funds" --> "Life assurance<b>,</b> contributions to pension funds"
 - ONSByRegion2019: "Housing: mortgage interest payments council tax etc." --> Housing: mortgage interest payments<b>,</b> council tax etc."
 
